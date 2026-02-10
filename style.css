@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  background: #f6efe6;
+  height: 100vh;
+  overflow: hidden;
+  font-family: Georgia, serif;
+}
+
+.item {
+  position: absolute;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+
+/* POSITIONS — you can move these anytime */
+.lights { top: 0; left: 50%; transform: translateX(-50%); width: 650px; }
+.lighter { top: 120px; left: 60px; width: 110px; }
+.envelope { top: 260px; left: 40%; width: 220px; }
+.camera { top: 120px; right: 80px; width: 180px; }
+.kiss { top: 300px; right: 120px; width: 70px; }
+.locket { bottom: 120px; left: 80px; width: 150px; }
+.cats { bottom: 100px; left: 40%; width: 200px; }
+.music { bottom: 80px; right: 80px; }
+
+.pink-glow {
+  filter: drop-shadow(0 0 20px hotpink);
+}
+
+.letter {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  width: 200px;
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  transform: translateY(100%);
+  transition: 0.4s;
+}
+
+.letter.show {
+  transform: translateY(-120%);
+}
+
+.gallery {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.gallery img {
+  width: 400px;
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
+.kiss-mark {
+  position: absolute;
+  animation: pop 2s forwards;
+}
+
+@keyframes pop {
+  0% { opacity: 0; transform: scale(0.5); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.3); }
+}
