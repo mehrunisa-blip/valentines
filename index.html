@@ -2,57 +2,103 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>i love you</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>velntines day ♥︎</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- LIGHTS -->
-  <img src="assets/images/lights.png" id="lights" class="item lights">
+<!-- 
+  TO ADD YOUR OWN BACKGROUND IMAGE:
+  1. Save your background image as: assets/images/background.jpg
+  2. If you want to use a different filename, update the CSS file:
+     - Find: background-image: url('assets/images/background.jpg');
+     - Replace with your filename (e.g., background.png, my-bg.jpeg, etc.)
+  3. The image will automatically cover the entire canvas
+-->
 
-  <!-- LIGHTER -->
-  <img src="assets/images/lighter-closed.png" id="lighter" class="item lighter">
+<div class="paper">
 
-  <!-- ENVELOPE -->
-  <div class="envelope-wrapper item envelope">
-    <img src="assets/images/envelope-closed.png" id="envelopeImg">
+  <!-- Lights -->
+  <img src="assets/images/lights.png" class="lights" id="lights">
 
-    <div id="letter" class="letter">
-      <p>
-        Write your love letter here ❤️
-      </p>
+  <!-- Pink overlay for lights -->
+  <div class="pink-overlay" id="pinkOverlay"></div>
+
+  <!-- Lighter -->
+  <img src="assets/images/lighter-closed.png" class="icon lighter" id="lighter">
+
+  <!-- Envelope -->
+  <div class="envelope-wrapper icon" id="envelopeWrapper">
+    <img src="assets/images/envelope-closed.png" class="envelope" id="envelope">
+  </div>
+
+  <!-- Camera -->
+  <img src="assets/images/camera.png" class="icon camera" id="camera">
+
+  <!-- Kisses -->
+  <img src="assets/images/kiss.png" class="icon kiss" id="kissBtn">
+
+  <!-- Locket -->
+  <img src="assets/images/locket-closed.png" class="icon locket" id="locket">
+
+  <!-- Cats -->
+  <img src="assets/images/cats-apart.png" class="icon cats" id="cats">
+
+  <!-- Music Player -->
+  <div class="player icon">
+    <div class="vinyl-container">
+      <div class="vinyl" id="vinyl">
+        <img src="assets/images/vinyl-photo.png" alt="Vinyl">
+      </div>
     </div>
+    
+    <div class="player-controls">
+      <div class="progress-container">
+        <span class="time" id="currentTime">0:00</span>
+        <input type="range" id="progress" value="0" min="0" max="100">
+        <span class="time" id="duration">0:00</span>
+      </div>
+      <div class="controls">
+        <button id="stop">■</button>
+        <button id="play">▶</button>
+        <button id="pause">❚❚</button>
+      </div>
+    </div>
+
+    <audio id="audio" src="assets/music/song.mp3"></audio>
   </div>
 
-  <!-- CAMERA -->
-  <img src="assets/images/camera.png" id="camera" class="item camera">
+</div>
 
-  <!-- KISS -->
-  <img src="assets/images/kiss.png" id="kiss" class="item kiss">
-
-  <!-- LOCKET -->
-  <img src="assets/images/locket-closed.png" id="locket" class="item locket">
-
-  <!-- CATS -->
-  <img src="assets/images/cats-apart.png" id="cats" class="item cats">
-
-  <!-- MUSIC -->
-  <div class="music item">
-    <button id="play">Play</button>
-    <button id="pause">Pause</button>
-    <button id="stop">Stop</button>
+<!-- LETTER MODAL -->
+<div class="letter-modal" id="letterModal">
+  <div class="letter-content" id="letterContent">
+    <p>
+      My Dearest Love,<br><br>
+      
+      Every moment with you feels like magic. You light up my world in ways I never thought possible. 
+      This little app is just a small token of how much you mean to me.<br><br>
+      
+      I love you more than words can express.<br><br>
+      
+      Forever yours,<br>
+      ❤️
+    </p>
   </div>
+</div>
 
-  <audio id="song" src="assets/music/song.mp3"></audio>
-
-  <!-- CAMERA GALLERY -->
-  <div id="gallery" class="gallery">
-    <button id="prev">⬅</button>
-    <img id="photo">
-    <button id="next">➡</button>
-    <button id="closeGallery" class="close">✕</button>
+<!-- CAMERA MODAL -->
+<div class="camera-modal" id="cameraModal">
+  <div class="camera-viewer">
+    <img src="assets/images/camera.png" class="camera-frame">
+    <img id="photoDisplay" class="photo-screen" src="assets/photos/1.jpeg">
+    <button id="prev" class="nav-btn prev-btn">◀</button>
+    <button id="next" class="nav-btn next-btn">▶</button>
+    <button id="closeCam" class="close-btn">✕</button>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

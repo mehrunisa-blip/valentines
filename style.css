@@ -1,77 +1,532 @@
-body {
+/* ================================= 
+   RESET 
+================================= */
+* {
   margin: 0;
-  background: #f6efe6;
-  height: 100vh;
-  overflow: hidden;
-  font-family: Georgia, serif;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.item {
-  position: absolute;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-
-
-/* POSITIONS — you can move these anytime */
-.lights { top: 0; left: 50%; transform: translateX(-50%); width: 650px; }
-.lighter { top: 120px; left: 60px; width: 110px; }
-.envelope { top: 260px; left: 40%; width: 220px; }
-.camera { top: 120px; right: 80px; width: 180px; }
-.kiss { top: 300px; right: 120px; width: 70px; }
-.locket { bottom: 120px; left: 80px; width: 150px; }
-.cats { bottom: 100px; left: 40%; width: 200px; }
-.music { bottom: 80px; right: 80px; }
-
-.pink-glow {
-  filter: drop-shadow(0 0 20px hotpink);
-}
-
-.letter {
-  position: absolute;
-  bottom: 20px;
-  left: 10px;
-  width: 200px;
-  background: white;
-  padding: 15px;
-  border-radius: 6px;
-  transform: translateY(100%);
-  transition: 0.4s;
-}
-
-.letter.show {
-  transform: translateY(-120%);
-}
-
-.gallery {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
+body {
+  background: #1a1a1a;
+  display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  min-height: 100vh;
+  font-family: 'Georgia', serif;
+  padding: 20px;
 }
 
-.gallery img {
-  width: 400px;
-  border-radius: 10px;
+/* ================================= 
+   A4 LANDSCAPE PAGE (scaled down to fit screen)
+================================= */
+.paper {
+  width: 1500px;
+  height: 750px;
+  background-color: #d4c4b0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform-origin: center center;
 }
 
-.close {
+/* Add your background image here */
+.paper::before {
+  content: '';
   position: absolute;
-  top: 30px;
-  right: 30px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
 }
 
-.kiss-mark {
+/* ================================= 
+   BASE ICON STYLE
+================================= */
+.icon {
   position: absolute;
-  animation: pop 2s forwards;
+  cursor: pointer;
+  user-select: none;
 }
 
-@keyframes pop {
-  0% { opacity: 0; transform: scale(0.5); }
-  20% { opacity: 1; }
-  100% { opacity: 0; transform: scale(1.3); }
+.lighter:hover,
+.locket:hover,
+.camera:hover,
+.kiss:hover,
+.envelope-wrapper:hover,
+.cats:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+.lighter:active,
+.locket:active,
+.camera:active,
+.kiss:active,
+.envelope-wrapper:active,
+.cats:active {
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+
+/* Special handling for envelope to maintain centering */
+.envelope-wrapper:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.envelope-wrapper:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+/* Special handling for cats to maintain centering */
+.cats:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+.cats:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+/* ================================= 
+   LIGHTS (top of page)
+================================= */
+.lights {
+  position: absolute;
+  top: -54px;
+  left: 223px;
+  width: auto;
+  height: 294px;
+  object-fit: contain;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 10;
+  transform: rotate(-2deg);
+}
+
+.pink-overlay {
+  position: absolute;
+  top: -72px;
+  left: 260px;
+  width: 800px;
+  height: 374px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 11;
+  transform: rotate(-2deg);
+}
+
+.pink-overlay.active {
+  opacity: 1;
+}
+
+/* Apply glow directly to lights when active */
+.lights.glow {
+  filter: drop-shadow(0 0 20px rgba(255, 182, 193, 0.8)) 
+          drop-shadow(0 0 40px rgba(255, 182, 193, 0.6)) 
+          drop-shadow(0 0 60px rgba(255, 182, 193, 0.4));
+}
+
+.pink-overlay.active {
+  opacity: 1;
+}
+
+/* ================================= 
+   LIGHTER (left side)
+================================= */
+.lighter {
+  top: 115px;
+  left: 150px;
+  width: 283px;
+  z-index: 5;
+}
+
+/* ================================= 
+   ENVELOPE (center)
+================================= */
+.envelope-wrapper {
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 510px;
+  z-index: 5;
+}
+
+.envelope {
+  width: 100%;
+  display: block;
+}
+
+/* ================================= 
+   LETTER MODAL
+================================= */
+.letter-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.letter-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.letter-content {
+  background: white;
+  padding: 60px;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+  font-size: 20px;
+  line-height: 1.8;
+  color: #333;
+  position: relative;
+  cursor: pointer;
+}
+
+.letter-content p {
+  text-align: left;
+}
+
+/* ================================= 
+   CAMERA (top right)
+================================= */
+.camera {
+  top: 105px;
+  right: 120px;
+  width: 274px;
+  z-index: 5;
+}
+
+/* ================================= 
+   CAMERA MODAL
+================================= */
+.camera-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.camera-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.camera-viewer {
+  position: relative;
+  width: 900px;
+  height: 650px;
+}
+
+.camera-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.photo-screen {
+  position: absolute;
+  top: 203px;
+  left: 65px;
+  width: 434px;
+  height: 360px;
+  object-fit: cover;
+  z-index: 3;
+  background: #fff;
+}
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 3;
+  transition: background 0.2s ease;
+}
+
+.nav-btn:hover {
+  background: white;
+}
+
+.prev-btn {
+  left: -80px;
+}
+
+.next-btn {
+  right: -80px;
+}
+
+.close-btn {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 3;
+  transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+  background: white;
+}
+
+/* ================================= 
+   KISS (right side, middle)
+================================= */
+.kiss {
+  top: 363px;
+  right: 189px;
+  width: 111px;
+  z-index: 5;
+}
+
+/* Kiss animations */
+.kiss-pop {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  animation: kissFloat 3s ease-out forwards;
+}
+
+@keyframes kissFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-80px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(1.2);
+  }
+}
+
+/* ================================= 
+   LOCKET (bottom left)
+================================= */
+.locket {
+  bottom: 90px;
+  left: 51px;
+  width: 309px;
+  z-index: 5;
+}
+
+/* ================================= 
+   CATS (bottom center)
+================================= */
+.cats {
+  bottom: -45px;
+  left: 500px;
+  transform: translateX(-50%);
+  width: 360px;
+  z-index: 5;
+}
+
+/* ================================= 
+   MUSIC PLAYER (bottom right)
+================================= */
+.player {
+  bottom: 90px;
+  right: 110px;
+  width: 411px;
+  height: 90px;
+  background: rgba(139, 115, 85, 0.7);
+  border-radius: 20px;
+  padding: 11px 17px;
+  display: flex;
+  gap: 17px;
+  align-items: center;
+  z-index: 5;
+}
+
+.player:hover {
+  transform: none;
+}
+
+.vinyl-container {
+  flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  position: relative;
+}
+
+.vinyl {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.vinyl img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vinyl.playing {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.player-controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.song-title {
+  display: none;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.time {
+  color: white;
+  font-size: 12px;
+  min-width: 40px;
+  text-align: center;
+}
+
+#progress {
+  flex: 1;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+#progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+#progress::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.controls button {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls button:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.controls button:active {
+  transform: scale(0.95);
+}
+
+/* Hide audio element */
+audio {
+  display: none;
+}
+
+/* ================================= 
+   RESPONSIVE (optional - scales down on smaller screens)
+================================= */
+@media (max-width: 1450px) {
+  .paper {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 1300px) {
+  .paper {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 1150px) {
+  .paper {
+    transform: scale(0.7);
+  }
 }
