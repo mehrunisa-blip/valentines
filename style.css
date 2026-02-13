@@ -28,6 +28,7 @@ body {
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   transform-origin: center center;
+  will-change: transform;
 }
 
 /* Add your background image here */
@@ -43,6 +44,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
+  will-change: auto;
 }
 
 /* ================================= 
@@ -52,6 +54,9 @@ body {
   position: absolute;
   cursor: pointer;
   user-select: none;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .lighter:hover,
@@ -60,7 +65,7 @@ body {
 .kiss:hover,
 .envelope-wrapper:hover,
 .cats:hover {
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(0);
   transition: transform 0.2s ease;
 }
 
@@ -70,26 +75,26 @@ body {
 .kiss:active,
 .envelope-wrapper:active,
 .cats:active {
-  transform: scale(0.95);
+  transform: scale(0.95) translateZ(0);
   transition: transform 0.2s ease;
 }
 
 /* Special handling for envelope to maintain centering */
 .envelope-wrapper:hover {
-  transform: translateX(-50%) scale(1.05);
+  transform: translateX(-50%) scale(1.05) translateZ(0);
 }
 
 .envelope-wrapper:active {
-  transform: translateX(-50%) scale(0.95);
+  transform: translateX(-50%) scale(0.95) translateZ(0);
 }
 
 /* Special handling for cats to maintain centering */
 .cats:hover {
-  transform: translateX(-50%) scale(1.05);
+  transform: translateX(-50%) scale(1.05) translateZ(0);
 }
 
 .cats:active {
-  transform: translateX(-50%) scale(0.95);
+  transform: translateX(-50%) scale(0.95) translateZ(0);
 }
 
 /* ================================= 
@@ -105,7 +110,9 @@ body {
   pointer-events: auto;
   cursor: pointer;
   z-index: 10;
-  transform: rotate(-2deg);
+  transform: rotate(-2deg) translateZ(0);
+  will-change: filter;
+  backface-visibility: hidden;
 }
 
 .pink-overlay {
@@ -118,7 +125,8 @@ body {
   pointer-events: none;
   transition: opacity 0.5s ease;
   z-index: 11;
-  transform: rotate(-2deg);
+  transform: rotate(-2deg) translateZ(0);
+  will-change: opacity;
 }
 
 .pink-overlay.active {
@@ -130,10 +138,6 @@ body {
   filter: drop-shadow(0 0 20px rgba(255, 182, 193, 0.8)) 
           drop-shadow(0 0 40px rgba(255, 182, 193, 0.6)) 
           drop-shadow(0 0 60px rgba(255, 182, 193, 0.4));
-}
-
-.pink-overlay.active {
-  opacity: 1;
 }
 
 /* ================================= 
@@ -152,7 +156,7 @@ body {
 .envelope-wrapper {
   top: 110px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateZ(0);
   width: 510px;
   z-index: 5;
 }
@@ -178,6 +182,7 @@ body {
   z-index: 1000;
   opacity: 0;
   transition: opacity 0.3s ease;
+  will-change: opacity;
 }
 
 .letter-modal.show {
@@ -196,6 +201,7 @@ body {
   color: #333;
   position: relative;
   cursor: pointer;
+  transform: translateZ(0);
 }
 
 .letter-content p {
@@ -228,6 +234,7 @@ body {
   z-index: 1000;
   opacity: 0;
   transition: opacity 0.3s ease;
+  will-change: opacity;
 }
 
 .camera-modal.show {
@@ -239,6 +246,7 @@ body {
   position: relative;
   width: 900px;
   height: 650px;
+  transform: translateZ(0);
 }
 
 .camera-frame {
@@ -260,12 +268,14 @@ body {
   object-fit: cover;
   z-index: 3;
   background: #fff;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .nav-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateZ(0);
   background: rgba(255, 255, 255, 0.9);
   border: none;
   width: 50px;
@@ -275,6 +285,7 @@ body {
   cursor: pointer;
   z-index: 3;
   transition: background 0.2s ease;
+  backface-visibility: hidden;
 }
 
 .nav-btn:hover {
@@ -302,6 +313,8 @@ body {
   cursor: pointer;
   z-index: 3;
   transition: background 0.2s ease;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .close-btn:hover {
@@ -324,24 +337,26 @@ body {
   pointer-events: none;
   z-index: 9999;
   animation: kissFloat 3s ease-out forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 @keyframes kissFloat {
   0% {
     opacity: 0;
-    transform: translateY(0) scale(0);
+    transform: translateY(0) scale(0) translateZ(0);
   }
   20% {
     opacity: 1;
-    transform: translateY(-20px) scale(1);
+    transform: translateY(-20px) scale(1) translateZ(0);
   }
   80% {
     opacity: 1;
-    transform: translateY(-80px) scale(1);
+    transform: translateY(-80px) scale(1) translateZ(0);
   }
   100% {
     opacity: 0;
-    transform: translateY(-120px) scale(1.2);
+    transform: translateY(-120px) scale(1.2) translateZ(0);
   }
 }
 
@@ -361,7 +376,7 @@ body {
 .cats {
   bottom: -45px;
   left: 500px;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateZ(0);
   width: 360px;
   z-index: 5;
 }
@@ -381,10 +396,11 @@ body {
   gap: 17px;
   align-items: center;
   z-index: 5;
+  transform: translateZ(0);
 }
 
 .player:hover {
-  transform: none;
+  transform: translateZ(0);
 }
 
 .vinyl-container {
@@ -401,6 +417,8 @@ body {
   overflow: hidden;
   background: #000;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .vinyl img {
@@ -411,14 +429,15 @@ body {
 
 .vinyl.playing {
   animation: spin 3s linear infinite;
+  will-change: transform;
 }
 
 @keyframes spin {
   from {
-    transform: rotate(0deg);
+    transform: rotate(0deg) translateZ(0);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(360deg) translateZ(0);
   }
 }
 
@@ -494,15 +513,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .controls button:hover {
   background: white;
-  transform: scale(1.1);
+  transform: scale(1.1) translateZ(0);
 }
 
 .controls button:active {
-  transform: scale(0.95);
+  transform: scale(0.95) translateZ(0);
 }
 
 /* Hide audio element */
