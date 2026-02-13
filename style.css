@@ -21,16 +21,31 @@ body {
    A4 LANDSCAPE PAGE (scaled down to fit screen)
 ================================= */
 .paper {
-  width: 100vw;
-  height: calc(100vw * 0.5);
-  max-width: 1500px;
-  max-height: 750px;
+  width: 1500px;
+  height: 750px;
   background-color: #d4c4b0;
   position: relative;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   transform-origin: center center;
   will-change: transform;
+  transform: scale(1);
+}
+
+/* ================================= 
+   RESPONSIVE (scales the entire canvas proportionally)
+================================= */
+
+@media (max-width: 1550px) {
+  .paper {
+    transform: scale(calc(100vw / 1550));
+  }
+}
+
+@media (max-height: 850px) and (min-width: 1550px) {
+  .paper {
+    transform: scale(calc((100vh - 100px) / 750));
+  }
 }
 
 /* Add your background image here */
@@ -533,22 +548,3 @@ audio {
   display: none;
 }
 
-/* ================================= 
-   RESPONSIVE (viewport-based sizing maintains full screen on all devices)
-================================= */
-
-/* Ensure proper scaling on very large screens */
-@media (min-width: 1501px) {
-  .paper {
-    width: 1500px;
-    height: 750px;
-  }
-}
-
-/* Tablets and smaller laptops */
-@media (max-height: 800px) {
-  .paper {
-    height: calc(100vh - 40px);
-    width: calc((100vh - 40px) * 2);
-  }
-}
